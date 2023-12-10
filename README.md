@@ -56,7 +56,7 @@ Figure 5: Labels predicted by SVM on validation set
 
 ![SVM Segmentation Output](imgs/svm_segmented.png)
 
-Figure 4: Labels predicted by SVM for the segmented characters
+Figure 6: Labels predicted by SVM for the segmented characters
 
 
 It was observed that performance of both trained classifiers on the provided dataset was strong. However, the CNN based classifier performed by a slight margin on the segmented characters. This can be attributed to CNN's capability to learn both low-level and high-level features allowing it extract more meaningful information. A detailed comparison can be found in the report which is included in this repository.
