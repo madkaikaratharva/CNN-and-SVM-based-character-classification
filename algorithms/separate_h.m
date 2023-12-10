@@ -1,0 +1,45 @@
+% Description: Extract row [row_idx] from [img] based
+% on count of pixel intensity
+function row = separate_h(img, threshold, row_idx)
+
+    % ensure it is not an empty image
+    assert(row_idx > 0)
+    % convert image to grayscale if not already
+    if ndims(img) == 3
+        gray_img = rgb2gray(img);
+    else
+        gray_img = img;
+    end
+
+    % converts image to black/white and count
+    % the number of white pixels in each row
+    gray_count = sum(gray_img/255, 2);
+
+    % display count of white pixels
+    figure('Position', [1, 1, 400, 300]);
+    t = tiledlayout(3,1);
+    nexttile;
+    barh(gray_count);
+    set(gca, 'YDir','reverse');
+    title('Count of white pixels');
+
+    % only consider rows with white pixels > threshold
+    gray_count_over_threshold = gray_count > threshold;
+
+    % show the lines that passed the threshold
+    % i.e. the lines that contain text
+    nexttile;
+    barh(gray_count_over_threshold);
+    title('Lines with white count > threshold');
+
+    % find the row indice of the transitions 
+    % between row counts
+    start_ends = find(diff(gray_count_over_threshold));
+
+    % extract corresponding row 
+    start = start_ends((1+(row_idx-1)*2));
+    end_at = start_ends((2+(row_idx-1)*2));
+
+    % display extracted [row_idx]
+    nexttile;
+    row = img(start:end_at+1, :, :);
